@@ -44,17 +44,23 @@ let server = http.createServer((req, res) => {
       if (req.url === "/users") {
         res.setHeader("Content-Type", "text/html");
         fs.readdir(contactPath, (err, content) => {
-          content.forEach((item) => {
-            fs.readFile(contactPath + item, (error, content) => {
-              let fcontent = JSON.parse(content.toString());
-              res.write(`<h1>${fcontent.name}</h1>`);
-              res.write(`<h1>${fcontent.email}</h1>`);
-              res.write(`<h1>${fcontent.username}</h1>`);
-              res.write(`<h1>${fcontent.age}</h1>`);
-              res.write(`<h1>${fcontent.about}</h1>`);
-              res.end();
+          console.log(content.length);
+          content.forEach((item, id) => {
+            fs.readFile(contactPath + item, (error, contentx) => {
+              let fcontent = JSON.parse(contentx.toString());
+              store +=
+                `<h1>${fcontent.name}</h1>` +
+                `<h1>${fcontent.email}</h1>` +
+                `<h1>${fcontent.username}</h1>` +
+                `<h1>${fcontent.age}</h1>` +
+                `<h1>${fcontent.about}</h1>`;
+              if (id === content.length - 1) {
+                res.end(store);
+              }
             });
           });
+
+          //   res.end();
         });
       } else {
         // http://localhost:5000/users?username=suraj
