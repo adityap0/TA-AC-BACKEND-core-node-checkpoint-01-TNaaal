@@ -44,7 +44,6 @@ let server = http.createServer((req, res) => {
       if (req.url === "/users") {
         res.setHeader("Content-Type", "text/html");
         fs.readdir(contactPath, (err, content) => {
-          console.log(content.length);
           content.forEach((item, id) => {
             fs.readFile(contactPath + item, (error, contentx) => {
               let fcontent = JSON.parse(contentx.toString());
@@ -59,8 +58,6 @@ let server = http.createServer((req, res) => {
               }
             });
           });
-
-          //   res.end();
         });
       } else {
         // http://localhost:5000/users?username=suraj
@@ -87,5 +84,3 @@ let server = http.createServer((req, res) => {
 server.listen(5000, () => {
   console.log(`5000 : Activated...`);
 });
-
-// 7. handle GET request on "/users" which should list all contacts into a webpage
