@@ -25,6 +25,7 @@ let server = http.createServer((req, res) => {
       fs.createReadStream("./contact.html").pipe(res);
     } else if (req.method === "POST" && pathname === "/form") {
       let parsedData = qs.parse(store);
+      parsedData.age = Number(parsedData.age);
       store = JSON.stringify(parsedData);
       let username = parsedData.username.toLowerCase();
       fs.open(contactPath + username + ".json", "wx", (error, fd) => {
@@ -48,11 +49,11 @@ let server = http.createServer((req, res) => {
             fs.readFile(contactPath + item, (error, contentx) => {
               let fcontent = JSON.parse(contentx.toString());
               store +=
-                `<h1>${fcontent.name}</h1>` +
-                `<h1>${fcontent.email}</h1>` +
-                `<h1>${fcontent.username}</h1>` +
-                `<h1>${fcontent.age}</h1>` +
-                `<h1>${fcontent.about}</h1>`;
+                `<h1>NAME : ${fcontent.name}</h1>` +
+                `<h1>EMAIL :${fcontent.email}</h1>` +
+                `<h1>USERNAME :${fcontent.username}</h1>` +
+                `<h1>AGE :${fcontent.age}</h1>` +
+                `<h1>BIO :${fcontent.about}</h1>`;
               if (id === content.length - 1) {
                 res.end(store);
               }
